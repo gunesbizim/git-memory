@@ -1,0 +1,8 @@
+src/
+local_cache/
+node_modules/
+dist/*.map
+tsconfig.json
+.claude.json
+CLAUDE.md
+AGENTS.md
