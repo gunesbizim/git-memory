@@ -1,6 +1,6 @@
 {
   "name": "git-memory",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Semantic Git history index for Claude Code — Node.js port of claude-memory",
   "type": "module",
   "bin": {
