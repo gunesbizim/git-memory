@@ -1,7 +1,7 @@
 <!-- gitnexus:start -->
 # GitNexus MCP
 
-This project is indexed by GitNexus as **git-memory** (110 symbols, 120 relationships, 0 execution flows).
+This project is indexed by GitNexus as **git-memory** (113 symbols, 120 relationships, 0 execution flows).
 
 ## Always Start Here
 
