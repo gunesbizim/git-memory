@@ -44,10 +44,18 @@ export async function createEmbeddingFunction(
     };
   }
 
-  // Default: ollama
-  const { OllamaEmbeddingFunction } = await import('chromadb');
-  return new OllamaEmbeddingFunction({
-    url: `${ollamaUrl}/api/embeddings`,
-    model: model || 'nomic-embed-text',
-  }) as unknown as IEmbeddingFunction;
+  // Default: ollama — with connectivity check and fastembed fallback
+  try {
+    const response = await fetch(`${ollamaUrl}/api/tags`);
+    if (!response.ok) throw new Error(`Ollama returned ${response.status}`);
+    const { OllamaEmbeddingFunction } = await import('chromadb');
+    return new OllamaEmbeddingFunction({
+      url: `${ollamaUrl}/api/embeddings`,
+      model: model || 'nomic-embed-text',
+    }) as unknown as IEmbeddingFunction;
+  } catch (e) {
+    process.stderr.write(`Ollama unavailable for embeddings: ${e}\n`);
+    process.stderr.write(`Falling back to fastembed (local, no server needed)\n`);
+    return createEmbeddingFunction('fastembed', model, ollamaUrl, openaiApiKey);
+  }
 }
