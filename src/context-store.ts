@@ -98,6 +98,8 @@ export class ContextStore {
       });
     } catch (e) {
       process.stderr.write(`ContextStore.addCommit failed for ${params.hash.slice(0, 8)}: ${e}\n`);
+      process.stderr.write(`  Disabling LLM context extraction for remaining commits.\n`);
+      this.llm = null;
     }
   }
 
