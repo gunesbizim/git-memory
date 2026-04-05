@@ -2,7 +2,6 @@
 import { Command } from 'commander';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, cpSync } from 'fs';
 import { resolve, basename, dirname } from 'path';
-import { homedir } from 'os';
 import { execSync } from 'child_process';
 import { simpleGit } from 'simple-git';
 import { GitMemoryIndexer } from './indexer.js';
@@ -36,10 +35,10 @@ When beginning any task in this repository:
 
 | Task | Skill |
 |------|-------|
-| Search commit history for a topic | \`/git-memory-search\` |
-| Index a new repository | \`/git-memory-index\` |
-| Debug why a component behaves a certain way | \`/git-memory-debug\` |
-| Check what's currently indexed | \`/git-memory-status\` |
+| Search commit history for a topic | \`.claude/skills/git-memory/git-memory-search/SKILL.md\` |
+| Index a new repository | \`.claude/skills/git-memory/git-memory-index/SKILL.md\` |
+| Debug why a component behaves a certain way | \`.claude/skills/git-memory/git-memory-debug/SKILL.md\` |
+| Check what's currently indexed | \`.claude/skills/git-memory/git-memory-status/SKILL.md\` |
 
 ## MCP Tools Reference
 
@@ -236,7 +235,7 @@ async function installCmd(opts: {
   if (!opts.mcpOnly) {
     try {
       const skillsSrc = findSkillsDir();
-      const skillsDst = resolve(homedir(), '.claude', 'skills');
+      const skillsDst = resolve(repoRoot, '.claude', 'skills', 'git-memory');
       mkdirSync(skillsDst, { recursive: true });
 
       const { readdirSync, statSync } = await import('fs');
@@ -250,7 +249,7 @@ async function installCmd(opts: {
         }
       }
       console.log(`\n✓ Installed ${installed.length} skills to ${skillsDst}:`);
-      for (const s of installed) console.log(`    /${s}`);
+      for (const s of installed) console.log(`    ${s}/SKILL.md`);
     } catch (e) {
       console.warn(`Warning: Could not install skills: ${e}`);
     }
@@ -263,7 +262,9 @@ async function installCmd(opts: {
     if (existsSync(claudeJsonPath)) {
       try {
         existing = JSON.parse(readFileSync(claudeJsonPath, 'utf-8')) as Record<string, unknown>;
-      } catch { /* start fresh */ }
+      } catch (e) {
+        console.warn(`Warning: Existing .claude.json is malformed, preserving file and adding mcpServers: ${e}`);
+      }
     }
 
     const mcpServers = (existing.mcpServers ?? {}) as Record<string, unknown>;
