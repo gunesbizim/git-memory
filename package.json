@@ -35,7 +35,7 @@
     "better-sqlite3": "^12.8.0",
     "chromadb": "^1.10.0",
     "commander": "^12.0.0",
-    "fastembed": "^1.14.0",
+    "fastembed": "^2.1.0",
     "ollama": "^0.5.18",
     "openai": "^4.0.0",
     "simple-git": "^3.33.0",
