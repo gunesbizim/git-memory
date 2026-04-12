@@ -1,6 +1,6 @@
 {
   "name": "git-memory",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Semantic Git history index for Claude Code — Node.js port of claude-memory",
   "type": "module",
   "bin": {
@@ -28,25 +28,30 @@
     "ai",
     "git-memory"
   ],
-  "license": "AGPL-3.0-or-later",
+  "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@types/better-sqlite3": "^7.6.13",
     "better-sqlite3": "^12.8.0",
     "chromadb": "^1.10.0",
     "commander": "^12.0.0",
     "fastembed": "^1.14.0",
-    "ollama": "^0.5.0",
+    "ollama": "^0.5.18",
     "openai": "^4.0.0",
-    "simple-git": "^3.27.0",
+    "simple-git": "^3.33.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.19.15",
     "tsx": "^4.19.0",
     "typescript": "^5.5.0"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "overrides": {
+    "fastembed": {
+      "tar": "^7.5.11"
+    }
   }
 }
