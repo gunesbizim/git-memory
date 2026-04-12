@@ -11,8 +11,12 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { z } from 'zod';
-import { basename } from 'path';
+import { basename, dirname, resolve } from 'path';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const { version } = JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf-8'));
 import { simpleGit, type SimpleGit, type DefaultLogFields } from 'simple-git';
 import { ChromaCommitIndex } from './chroma-index.js';
 import { ContextStore } from './context-store.js';
@@ -190,7 +194,7 @@ const tools = [
 
 // ── MCP Server ────────────────────────────────────────────────────────────────
 const server = new Server(
-  { name: 'git-memory', version: '0.1.0' },
+  { name: 'git-memory', version },
   { capabilities: { tools: {} } },
 );
 

@@ -12,6 +12,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = dirname(__filename);
+const { version } = JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf-8'));
 
 // ── CLAUDE.md template ────────────────────────────────────────────────────────
 const MARKER_START = '<!-- git-memory:start -->';
@@ -319,7 +320,7 @@ const program = new Command();
 program
   .name('git-memory')
   .description('Semantic Git history index for Claude Code')
-  .version('0.1.0');
+  .version(version);
 
 program.command('index')
   .description('Bulk-index a repository commit history into ChromaDB')
